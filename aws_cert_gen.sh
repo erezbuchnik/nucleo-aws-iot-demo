@@ -20,8 +20,8 @@ function generate_csr {
 function obtain_rootca_cert {
 
 	# Obtain root CA and CRT:
-	root_ca_path=`cat ./config.json | jq -r '.cert.root_ca_path'`
-	cert_path=`cat ./config.json | jq -r '.cert.certificate_path'`
+	root_ca_path=`cat ${workdir}/sys_config.json | jq -r '.cert.root_ca_path'`
+	cert_path=`cat ${workdir}/sys_config.json | jq -r '.cert.certificate_path'`
 	
 	cp "${root_ca_path}" ./rootCA.pem
 	cp "${cert_path}" ./certificate.pem.crt
