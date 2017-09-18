@@ -2,6 +2,8 @@
 
 action=$1
 
+workdir=`pwd`
+
 docker_fingerprint=0EBFCD88
 
 function remove_old_versions {
@@ -16,6 +18,7 @@ function install_repo {
 	echo "#${FUNCNAME[0]} $@"
 	# Install Docker repo:
 	sudo apt -y update
+	sudo apt -y install jq
 	sudo apt -y install apt-transport-https
 	sudo apt -y install ca-certificates
 	sudo apt -y install curl
@@ -31,6 +34,7 @@ function install_repo {
 function install_docker_ce {
 
 	echo "#${FUNCNAME[0]} $@"
+	[[ `sudo apt-key fingerprint ${docker_fingerprint} | xargs echo` == "" ]] && { echo "missing prerequisites"; exit; }
 	# Install Docker-CE:
 	sudo apt -y update
 	sudo apt -y install docker-ce
@@ -47,11 +51,11 @@ function test_docker_ce {
 function upgrade_docker_ce {
 
 	echo "#${FUNCNAME[0]} $@"
-	version=$1
+	upgrade_version=`cat ${workdir}/config.json | jq -r '.docker.upgrade_version'`
 	
 	# Upgrade:
 	apt-cache madison docker-ce
-	sudo apt-get install docker-ce="${version}"
+	sudo apt-get install docker-ce="${upgrade_version}"
 }
 
 function uninstall_docker_ce {
@@ -66,13 +70,11 @@ if [[ "${action}" == "prerequisites" ]] ; then
 	remove_old_versions
 	install_repo
 elif [[ "${action}" == "install" ]] ; then
-	[[ `sudo apt-key fingerprint ${docker_fingerprint} | xargs echo` == "" ]] && { echo "missing prerequisites"; exit; }
 	install_docker_ce
 elif [[ "${action}" == "uninstall" ]] ; then
 	uninstall_docker_ce
 elif [[ "${action}" == "upgrade" ]] ; then
-	version=$2
-	upgrade_docker_ce "${version}"
+	upgrade_docker_ce
 fi
 
 test_docker_ce

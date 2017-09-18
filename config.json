@@ -1,0 +1,13 @@
+
+{
+	"docker": {
+		"upgrade_version": "XXXXXXXX"
+	},
+	"cert": {
+		"root_ca_path": "/XXXXXXXX-rootCA.pem",
+		"certificate_path": "/XXXXXXXX-certificate.pem.crt"
+	},
+	"identity": {
+		"iot_endpoint": "XXXXXXXXXXXXXX.iot.us-east-1.amazonaws.com"
+	}
+}
