@@ -61,6 +61,7 @@ function uninstall_docker_ce {
 	sudo apt -y purge docker-ce
 }
 
+
 if [[ "${action}" == "prerequisites" ]] ; then
 	remove_old_versions
 	install_repo
