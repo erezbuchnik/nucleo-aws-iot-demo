@@ -4,7 +4,7 @@ command_name=$_
 action=$1
 
 host_workdir=`pwd`
-container_workdir="/src/nucleo-aws-iot-demo-docker"
+container_workdir="/src"
 
 docker_fingerprint=0EBFCD88
 
@@ -71,7 +71,9 @@ function uninstall_docker_ce {
 function nucleo_img_build {
 
 	echo "#${FUNCNAME[0]} $@"
+	cp ./Dockerfile.aws ./Dockerfile
 	sudo docker build -t nucleo_img ./
+	rm Dockerfile
 }
 
 
