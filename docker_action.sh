@@ -68,33 +68,71 @@ function uninstall_docker_ce {
 }
 
 
-function nucleo_img_build {
+function iot_aws_img_build {
 
 	echo "#${FUNCNAME[0]} $@"
 	cp ./Dockerfile.aws ./Dockerfile
-	sudo docker build -t nucleo_img ./
+	sudo docker build -t iot_aws_img ./
 	rm Dockerfile
 }
 
 
-function nucleo_container_run {
+function iot_aws_container_run {
 
 	echo "#${FUNCNAME[0]} $@"
+	if [ ! -f ./sys_config.json ]; then
+		echo "ABORT: sys_config.json file not found."
+		return
+	fi
 	cp ./sys_config.json ./share/
-	cp ./nucleo_run.sh ./share/
+	cp ./iot_aws_run.sh ./share/
 	sudo docker run -ti \
-		--name nucleo_cont \
+		--name iot_aws_cont \
 		-v "${host_workdir}"/share:"${container_workdir}"/share \
-		nucleo_img \
-		"${container_workdir}"/share/nucleo_run.sh
+		iot_aws_img \
+		"${container_workdir}"/share/iot_aws_run.sh
 }
 
 
-function nucleo_container_kill {
+function iot_aws_container_kill {
 
 	echo "#${FUNCNAME[0]} $@"
-	sudo docker kill nucleo_cont
-	sudo docker rm nucleo_cont
+	sudo docker kill iot_aws_cont
+	sudo docker rm iot_aws_cont
+}
+
+
+function iot_dash_img_build {
+
+	echo "#${FUNCNAME[0]} $@"
+	cp ./Dockerfile.dash ./Dockerfile
+	sudo docker build -t iot_dash_img ./
+	rm Dockerfile
+}
+
+
+function iot_dash_container_run {
+
+	echo "#${FUNCNAME[0]} $@"
+	if [ ! -f ./sys_config.json ]; then
+		echo "ABORT: sys_config.json file not found."
+		return
+	fi
+	cp ./sys_config.json ./share/
+	cp ./iot_dash_run.sh ./share/
+	sudo docker run -ti \
+		--name iot_dash_cont \
+		-v "${host_workdir}"/share:"${container_workdir}"/share \
+		iot_dash_img \
+		"${container_workdir}"/share/iot_dash_run.sh
+}
+
+
+function iot_dash_container_kill {
+
+	echo "#${FUNCNAME[0]} $@"
+	sudo docker kill iot_dash_cont
+	sudo docker rm iot_dash_cont
 }
 
 
@@ -107,9 +145,12 @@ function usage {
 	echo "#${command_name} install"
 	echo "#${command_name} uninstall"
 	echo "#${command_name} upgrade"
-	echo "#${command_name} build"
-	echo "#${command_name} run"
-	echo "#${command_name} kill"
+	echo "#${command_name} aws_build"
+	echo "#${command_name} aws_run"
+	echo "#${command_name} aws_kill"
+	echo "#${command_name} dash_build"
+	echo "#${command_name} dash_run"
+	echo "#${command_name} dash_kill"
 	echo 
 }
 
@@ -129,12 +170,18 @@ elif [[ "${action}" == "uninstall" ]] ; then
 elif [[ "${action}" == "upgrade" ]] ; then
 	upgrade_docker_ce
 	test_docker_ce
-elif [[ "${action}" == "build" ]] ; then
-	nucleo_img_build
-elif [[ "${action}" == "run" ]] ; then
-	nucleo_container_run
-elif [[ "${action}" == "kill" ]] ; then
-	nucleo_container_kill
+elif [[ "${action}" == "aws_build" ]] ; then
+	iot_aws_img_build
+elif [[ "${action}" == "aws_run" ]] ; then
+	iot_aws_container_run
+elif [[ "${action}" == "aws_kill" ]] ; then
+	iot_aws_container_kill
+elif [[ "${action}" == "dash_build" ]] ; then
+	iot_dash_img_build
+elif [[ "${action}" == "dash_run" ]] ; then
+	iot_dash_container_run
+elif [[ "${action}" == "dash_kill" ]] ; then
+	iot_dash_container_kill
 else
 	usage
 fi

@@ -1,0 +1,21 @@
+
+{
+	"docker": {
+		"upgrade_version": "XXXXXXXX"
+	},
+	"cert": {
+		"root_ca_path": "/XXXXXXXX-rootCA.pem",
+		"certificate_path": "/XXXXXXXX-certificate.pem.crt"
+	},
+	"geo": {
+		"aws_region": "us-east-1"
+	},
+	"api": {
+		"api_url": "https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod/"
+	},
+	"identity": {
+		"iot_endpoint": "XXXXXXXXXXXXXX.iot.us-east-1.amazonaws.com",
+		"cognito_identity_pool": "XXXXXXXXXXXXXX.iot.us-east-1.amazonaws.com"
+	}
+}
+
