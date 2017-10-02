@@ -9,14 +9,15 @@ cognito_identity_pool=`cat ${workdir}/share/sys_config.json | jq -r '.identity.c
 
 cd ./dashboard
 
-cp ./config.dist.js ./config.js
-sed -i "s/awsRegion: '.*'/awsRegion: '${aws_region}'/" -- ./config.js
-sed -i "s/apiUrl: '.*'/apiUrl: '${api_rul}'/" -- ./config.js
-sed -i "s/iotEndpoint: '.*'/iotEndpoint: '${iot_endpoint}'/" -- ./config.js
-sed -i "s/cognitoIdentityPool: '.*'/cognitoIdentityPool: '${cognito_identity_pool}'/" -- ./config.js
+npm install
+cp ./src/config.dist.js ./src/config.js
+sed -i "s/awsRegion: '.*'/awsRegion: '${aws_region}'/" -- ./src/config.js
+sed -i "s/apiUrl: '.*'/apiUrl: '${api_rul}'/" -- ./src/config.js
+sed -i "s/iotEndpoint: '.*'/iotEndpoint: '${iot_endpoint}'/" -- ./src/config.js
+sed -i "s/cognitoIdentityPool: '.*'/cognitoIdentityPool: '${cognito_identity_pool}'/" -- ./src/config.js
 echo 
 echo "CONFIG:"
-cat ./config.js
+cat ./src/config.js
 echo 
 npm run build
 mkdir ${workdir}/share/dashboard_dist

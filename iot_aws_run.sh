@@ -13,8 +13,8 @@ echo "CONFIG:"
 cat ./config.js
 echo
 npm i && npm run build && npm run zip
-mkdir ${workdir}/share/aws_lambdas
-cp ./dist/*.zip ${workdir}/share/aws_lambdas
+mkdir ${workdir}/share/aws_dist
+cp ./dist/*.js.zip ${workdir}/share/aws_dist/
 
 cd -
 
