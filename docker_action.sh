@@ -1,5 +1,6 @@
 #!/bin/bash
 
+command_name=$_
 action=$1
 
 host_workdir=`pwd`
@@ -87,6 +88,30 @@ function nucleo_container_run {
 }
 
 
+function nucleo_container_kill {
+
+	echo "#${FUNCNAME[0]} $@"
+	sudo docker kill nucleo_cont
+	sudo docker rm nucleo_cont
+}
+
+
+function usage {
+
+	echo 
+	echo "#${command_name} ${FUNCNAME[0]} $@"
+	echo "---------------"
+	echo "#${command_name} fullinstall"
+	echo "#${command_name} install"
+	echo "#${command_name} uninstall"
+	echo "#${command_name} upgrade"
+	echo "#${command_name} build"
+	echo "#${command_name} run"
+	echo "#${command_name} kill"
+	echo 
+}
+
+
 if [[ "${action}" == "fullinstall" ]] ; then
 	remove_old_versions
 	uninstall_docker_ce
@@ -106,5 +131,9 @@ elif [[ "${action}" == "build" ]] ; then
 	nucleo_img_build
 elif [[ "${action}" == "run" ]] ; then
 	nucleo_container_run
+elif [[ "${action}" == "kill" ]] ; then
+	nucleo_container_kill
+else
+	usage
 fi
 

@@ -9,5 +9,7 @@ cd ./aws
 cp ./config.dist.js ./config.js
 sed -i "s/iotEndpoint: '.*'/iotEndpoint: '${iot_endpoint}'/" -- ./config.js
 npm i && npm run build && npm run zip
+mkdir ${workdir}/share/aws_lambdas
+cp ./dist/*.zip ${workdir}/share/aws_lambdas
 
 cd -
