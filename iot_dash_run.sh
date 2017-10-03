@@ -23,5 +23,7 @@ npm run build
 mkdir ${workdir}/share/dashboard_dist
 cp ./dist/* ${workdir}/share/dashboard_dist
 
+#aws s3 sync dist/ s3://<your.bucket.name>/
+
 cd -
 
