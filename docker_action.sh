@@ -81,9 +81,14 @@ function iot_aws_container_run {
 
 	echo "#${FUNCNAME[0]} $@"
 	if [ ! -f ./sys_config.json ]; then
-		echo "ABORT: sys_config.json file not found."
+		echo 
+		echo "ABORT: sys_config.json file not found. Please run:"
+		echo "       cp sys_config.dist.json sys_config.json"
+		echo "       and edit sys_config.json with your credentials."
+		echo 
 		return
 	fi
+	mkdir -p ./share
 	cp ./sys_config.json ./share/
 	cp ./iot_aws_run.sh ./share/
 	sudo docker run -ti \
@@ -115,9 +120,14 @@ function iot_dash_container_run {
 
 	echo "#${FUNCNAME[0]} $@"
 	if [ ! -f ./sys_config.json ]; then
-		echo "ABORT: sys_config.json file not found."
+		echo 
+		echo "ABORT: sys_config.json file not found. Please run:"
+		echo "       cp sys_config.dist.json sys_config.json"
+		echo "       and edit sys_config.json with your credentials."
+		echo 
 		return
 	fi
+	mkdir -p ./share
 	cp ./sys_config.json ./share/
 	cp ./iot_dash_run.sh ./share/
 	sudo docker run -ti \
@@ -140,7 +150,7 @@ function usage {
 
 	echo 
 	echo "#${command_name} ${FUNCNAME[0]} $@"
-	echo "---------------"
+	echo "----------------"
 	echo "#${command_name} fullinstall"
 	echo "#${command_name} install"
 	echo "#${command_name} uninstall"

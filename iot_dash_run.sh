@@ -9,7 +9,6 @@ cognito_identity_pool=`cat ${workdir}/share/sys_config.json | jq -r '.identity.c
 
 cd ./dashboard
 
-npm install
 cp ./src/config.dist.js ./src/config.js
 sed -i "s/awsRegion: '.*'/awsRegion: '${aws_region}'/" -- ./src/config.js
 sed -i "s/apiUrl: '.*'/apiUrl: '${api_rul}'/" -- ./src/config.js

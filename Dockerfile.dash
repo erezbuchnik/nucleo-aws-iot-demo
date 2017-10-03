@@ -15,6 +15,7 @@ RUN apt -y install zip
 
 # Copy in the source:
 COPY ./dashboard /src/dashboard
+RUN cd /src/dashboard && npm install
 
 WORKDIR /src
 
