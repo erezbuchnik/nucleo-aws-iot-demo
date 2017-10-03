@@ -14,7 +14,7 @@ RUN apt -y install jq
 RUN apt -y install zip
 
 # Copy in the source:
-COPY ./ /src/nucleo-aws-iot-demo-docker/
+COPY ./aws /src/aws
 
-WORKDIR /src/nucleo-aws-iot-demo-docker
+WORKDIR /src
 
